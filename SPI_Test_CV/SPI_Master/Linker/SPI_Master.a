@@ -1,0 +1,342 @@
+;#include <mega32.h>
+;PCODE: $00000000 VOL: 0
+	#ifndef __SLEEP_DEFINED__
+;PCODE: $00000001 VOL: 0
+	#define __SLEEP_DEFINED__
+;PCODE: $00000002 VOL: 0
+	.EQU __se_bit=0x80
+;PCODE: $00000003 VOL: 0
+	.EQU __sm_mask=0x70
+;PCODE: $00000004 VOL: 0
+	.EQU __sm_powerdown=0x20
+;PCODE: $00000005 VOL: 0
+	.EQU __sm_powersave=0x30
+;PCODE: $00000006 VOL: 0
+	.EQU __sm_standby=0x60
+;PCODE: $00000007 VOL: 0
+	.EQU __sm_ext_standby=0x70
+;PCODE: $00000008 VOL: 0
+	.EQU __sm_adc_noise_red=0x10
+;PCODE: $00000009 VOL: 0
+	.SET power_ctrl_reg=mcucr
+;PCODE: $0000000A VOL: 0
+	#endif
+;PCODE: $0000000B VOL: 0
+;PCODE: $0000000C VOL: 0
+;#include <delay.h>
+;
+;void SPI_Init_Master(void)
+; 0000 0005 {
+
+	.CSEG
+;PCODE: $0000000D VOL: 0
+;PCODE: $0000000E VOL: 0
+; 0000 0006     // Init MOSI and SCK and SS Pin(s) As OP
+; 0000 0007     DDRB = DDRB | 0xB0;
+;PCODE: $0000000F VOL: 0
+;PCODE: $00000010 VOL: 0
+;PCODE: $00000011 VOL: 0
+; 0000 0008 
+; 0000 0009 
+; 0000 000A     // Init SPI Control Register
+; 0000 000B     SPCR = 0x51;
+;PCODE: $00000012 VOL: 0
+;PCODE: $00000013 VOL: 0
+; 0000 000C }
+;PCODE: $00000014 VOL: 0
+;PCODE: $00000015 VOL: 0
+;
+;void SPI_Send_Char(unsigned char data)
+; 0000 000F {
+;PCODE: $00000016 VOL: 0
+;PCODE: $00000017 VOL: 0
+; 0000 0010     // Put Data on SPI Data Register
+; 0000 0011     SPDR = data;
+;	data -> Y+0
+;PCODE: $00000018 VOL: 0
+;PCODE: $00000019 VOL: 0
+; 0000 0012 
+; 0000 0013     // Wait Untill Completing Send Char
+; 0000 0014     // Read Status Register to check if it set
+; 0000 0015     while(!(SPSR & 0x80));
+;PCODE: $0000001A VOL: 0
+;PCODE: $0000001B VOL: 0
+;PCODE: $0000001C VOL: 0
+;PCODE: $0000001D VOL: 0
+;PCODE: $0000001E VOL: 0
+;PCODE: $0000001F VOL: 0
+; 0000 0016 }
+;PCODE: $00000020 VOL: 0
+;PCODE: $00000021 VOL: 0
+;PCODE: $00000022 VOL: 0
+;
+;void SPI_Send_String(unsigned char* str, unsigned char N_Chars)
+; 0000 0019 {
+;PCODE: $00000023 VOL: 0
+;PCODE: $00000024 VOL: 0
+; 0000 001A     unsigned char count = 0;
+; 0000 001B     for(count=0; count<N_Chars; count++)
+;PCODE: $00000025 VOL: 0
+;	*str -> Y+2
+;	N_Chars -> Y+1
+;	count -> R17
+;PCODE: $00000026 VOL: 0
+;PCODE: $00000027 VOL: 0
+;PCODE: $00000028 VOL: 0
+;PCODE: $00000029 VOL: 0
+;PCODE: $0000002A VOL: 0
+;PCODE: $0000002B VOL: 0
+;PCODE: $0000002C VOL: 0
+;PCODE: $0000002D VOL: 0
+;PCODE: $0000002E VOL: 0
+;PCODE: $0000002F VOL: 0
+;PCODE: $00000030 VOL: 0
+; 0000 001C         SPI_Send_Char(str[count]);
+;PCODE: $00000031 VOL: 0
+;PCODE: $00000032 VOL: 0
+;PCODE: $00000033 VOL: 0
+;PCODE: $00000034 VOL: 0
+;PCODE: $00000035 VOL: 0
+;PCODE: $00000036 VOL: 0
+;PCODE: $00000037 VOL: 0
+;PCODE: $00000038 VOL: 0
+;PCODE: $00000039 VOL: 0
+;PCODE: $0000003A VOL: 0
+; 0000 001D }
+;PCODE: $0000003B VOL: 0
+;PCODE: $0000003C VOL: 0
+;PCODE: $0000003D VOL: 0
+;PCODE: $0000003E VOL: 0
+;PCODE: $0000003F VOL: 0
+;
+;// Init MCU Registers
+;void MCU_Init(void)
+; 0000 0021 {
+;PCODE: $00000040 VOL: 0
+;PCODE: $00000041 VOL: 0
+; 0000 0022     // Input/Output Ports initialization
+; 0000 0023     // Port A initialization
+; 0000 0024     // Func7=In Func6=In Func5=In Func4=In Func3=In Func2=In Func1=In Func0=In
+; 0000 0025     // State7=T State6=T State5=T State4=T State3=T State2=T State1=T State0=T
+; 0000 0026     PORTA=0x00;
+;PCODE: $00000042 VOL: 0
+;PCODE: $00000043 VOL: 0
+; 0000 0027     DDRA=0x00;
+;PCODE: $00000044 VOL: 0
+;PCODE: $00000045 VOL: 0
+; 0000 0028 
+; 0000 0029     // Port B initialization
+; 0000 002A     // Func7=In Func6=In Func5=In Func4=In Func3=In Func2=In Func1=In Func0=In
+; 0000 002B     // State7=T State6=T State5=T State4=T State3=T State2=T State1=T State0=T
+; 0000 002C     PORTB=0x00;
+;PCODE: $00000046 VOL: 0
+;PCODE: $00000047 VOL: 0
+; 0000 002D     DDRB=0x00;
+;PCODE: $00000048 VOL: 0
+;PCODE: $00000049 VOL: 0
+; 0000 002E 
+; 0000 002F     // Port C initialization
+; 0000 0030     // Func7=In Func6=In Func5=In Func4=In Func3=In Func2=In Func1=In Func0=In
+; 0000 0031     // State7=T State6=T State5=T State4=T State3=T State2=T State1=T State0=T
+; 0000 0032     PORTC=0x00;
+;PCODE: $0000004A VOL: 0
+;PCODE: $0000004B VOL: 0
+; 0000 0033     DDRC=0x00;
+;PCODE: $0000004C VOL: 0
+;PCODE: $0000004D VOL: 0
+; 0000 0034 
+; 0000 0035     // Port D initialization
+; 0000 0036     // Func7=In Func6=In Func5=In Func4=In Func3=In Func2=In Func1=In Func0=In
+; 0000 0037     // State7=T State6=T State5=T State4=T State3=T State2=T State1=T State0=T
+; 0000 0038     PORTD=0x00;
+;PCODE: $0000004E VOL: 0
+;PCODE: $0000004F VOL: 0
+; 0000 0039     DDRD=0x00;
+;PCODE: $00000050 VOL: 0
+;PCODE: $00000051 VOL: 0
+; 0000 003A 
+; 0000 003B     // Timer/Counter 0 initialization
+; 0000 003C     // Clock source: System Clock
+; 0000 003D     // Clock value: Timer 0 Stopped
+; 0000 003E     // Mode: Normal top=0xFF
+; 0000 003F     // OC0 output: Disconnected
+; 0000 0040     TCCR0=0x00;
+;PCODE: $00000052 VOL: 0
+;PCODE: $00000053 VOL: 0
+; 0000 0041     TCNT0=0x00;
+;PCODE: $00000054 VOL: 0
+;PCODE: $00000055 VOL: 0
+; 0000 0042     OCR0=0x00;
+;PCODE: $00000056 VOL: 0
+;PCODE: $00000057 VOL: 0
+; 0000 0043 
+; 0000 0044     // Timer/Counter 1 initialization
+; 0000 0045     // Clock source: System Clock
+; 0000 0046     // Clock value: Timer1 Stopped
+; 0000 0047     // Mode: Normal top=0xFFFF
+; 0000 0048     // OC1A output: Discon.
+; 0000 0049     // OC1B output: Discon.
+; 0000 004A     // Noise Canceler: Off
+; 0000 004B     // Input Capture on Falling Edge
+; 0000 004C     // Timer1 Overflow Interrupt: Off
+; 0000 004D     // Input Capture Interrupt: Off
+; 0000 004E     // Compare A Match Interrupt: Off
+; 0000 004F     // Compare B Match Interrupt: Off
+; 0000 0050     TCCR1A=0x00;
+;PCODE: $00000058 VOL: 0
+;PCODE: $00000059 VOL: 0
+; 0000 0051     TCCR1B=0x00;
+;PCODE: $0000005A VOL: 0
+;PCODE: $0000005B VOL: 0
+; 0000 0052     TCNT1H=0x00;
+;PCODE: $0000005C VOL: 0
+;PCODE: $0000005D VOL: 0
+; 0000 0053     TCNT1L=0x00;
+;PCODE: $0000005E VOL: 0
+;PCODE: $0000005F VOL: 0
+; 0000 0054     ICR1H=0x00;
+;PCODE: $00000060 VOL: 0
+;PCODE: $00000061 VOL: 0
+; 0000 0055     ICR1L=0x00;
+;PCODE: $00000062 VOL: 0
+;PCODE: $00000063 VOL: 0
+; 0000 0056     OCR1AH=0x00;
+;PCODE: $00000064 VOL: 0
+;PCODE: $00000065 VOL: 0
+; 0000 0057     OCR1AL=0x00;
+;PCODE: $00000066 VOL: 0
+;PCODE: $00000067 VOL: 0
+; 0000 0058     OCR1BH=0x00;
+;PCODE: $00000068 VOL: 0
+;PCODE: $00000069 VOL: 0
+; 0000 0059     OCR1BL=0x00;
+;PCODE: $0000006A VOL: 0
+;PCODE: $0000006B VOL: 0
+; 0000 005A 
+; 0000 005B     // Timer/Counter 2 initialization
+; 0000 005C     // Clock source: System Clock
+; 0000 005D     // Clock value: Timer2 Stopped
+; 0000 005E     // Mode: Normal top=0xFF
+; 0000 005F     // OC2 output: Disconnected
+; 0000 0060     ASSR=0x00;
+;PCODE: $0000006C VOL: 0
+;PCODE: $0000006D VOL: 0
+; 0000 0061     TCCR2=0x00;
+;PCODE: $0000006E VOL: 0
+;PCODE: $0000006F VOL: 0
+; 0000 0062     TCNT2=0x00;
+;PCODE: $00000070 VOL: 0
+;PCODE: $00000071 VOL: 0
+; 0000 0063     OCR2=0x00;
+;PCODE: $00000072 VOL: 0
+;PCODE: $00000073 VOL: 0
+; 0000 0064 
+; 0000 0065     // External Interrupt(s) initialization
+; 0000 0066     // INT0: Off
+; 0000 0067     // INT1: Off
+; 0000 0068     // INT2: Off
+; 0000 0069     MCUCR=0x00;
+;PCODE: $00000074 VOL: 0
+;PCODE: $00000075 VOL: 0
+; 0000 006A     MCUCSR=0x00;
+;PCODE: $00000076 VOL: 0
+;PCODE: $00000077 VOL: 0
+; 0000 006B 
+; 0000 006C     // Timer(s)/Counter(s) Interrupt(s) initialization
+; 0000 006D     TIMSK=0x00;
+;PCODE: $00000078 VOL: 0
+;PCODE: $00000079 VOL: 0
+; 0000 006E 
+; 0000 006F     // USART initialization
+; 0000 0070     // USART disabled
+; 0000 0071     UCSRB=0x00;
+;PCODE: $0000007A VOL: 0
+;PCODE: $0000007B VOL: 0
+; 0000 0072 
+; 0000 0073     // Analog Comparator initialization
+; 0000 0074     // Analog Comparator: Off
+; 0000 0075     // Analog Comparator Input Capture by Timer/Counter 1: Off
+; 0000 0076     ACSR=0x80;
+;PCODE: $0000007C VOL: 0
+;PCODE: $0000007D VOL: 0
+; 0000 0077     SFIOR=0x00;
+;PCODE: $0000007E VOL: 0
+;PCODE: $0000007F VOL: 0
+; 0000 0078 
+; 0000 0079     // ADC initialization
+; 0000 007A     // ADC disabled
+; 0000 007B     ADCSRA=0x00;
+;PCODE: $00000080 VOL: 0
+;PCODE: $00000081 VOL: 0
+; 0000 007C 
+; 0000 007D     // SPI initialization
+; 0000 007E     // SPI disabled
+; 0000 007F     SPCR=0x00;
+;PCODE: $00000082 VOL: 0
+;PCODE: $00000083 VOL: 0
+; 0000 0080 
+; 0000 0081     // TWI initialization
+; 0000 0082     // TWI disabled
+; 0000 0083     TWCR=0x00;
+;PCODE: $00000084 VOL: 0
+;PCODE: $00000085 VOL: 0
+; 0000 0084 }
+;PCODE: $00000086 VOL: 0
+;PCODE: $00000087 VOL: 0
+;
+;
+;void main(void)
+; 0000 0088 {
+;PCODE: $00000088 VOL: 0
+; 0000 0089     // Declare Variables
+; 0000 008A     unsigned char myStr[5] = {0x01, 0x02, 0x03, 0x04, 0x05};
+; 0000 008B     // Init Functions
+; 0000 008C     MCU_Init();
+;PCODE: $00000089 VOL: 0
+;PCODE: $0000008A VOL: 0
+;PCODE: $0000008B VOL: 0
+;PCODE: $0000008C VOL: 0
+;PCODE: $0000008D VOL: 0
+;PCODE: $0000008E VOL: 0
+;PCODE: $0000008F VOL: 0
+;PCODE: $00000090 VOL: 0
+;PCODE: $00000091 VOL: 0
+;PCODE: $00000092 VOL: 0
+;PCODE: $00000093 VOL: 0
+;	myStr -> Y+0
+;PCODE: $00000094 VOL: 0
+; 0000 008D 
+; 0000 008E     // Init SPI as Master
+; 0000 008F     SPI_Init_Master();
+;PCODE: $00000095 VOL: 0
+; 0000 0090 
+; 0000 0091     while(1)
+;PCODE: $00000096 VOL: 0
+; 0000 0092     {
+; 0000 0093         // Infinte Loop
+; 0000 0094         SPI_Send_Char(0x37);
+;PCODE: $00000097 VOL: 0
+;PCODE: $00000098 VOL: 0
+;PCODE: $00000099 VOL: 0
+; 0000 0095         delay_ms(3000);
+;PCODE: $0000009A VOL: 0
+;PCODE: $0000009B VOL: 0
+;PCODE: $0000009C VOL: 0
+; 0000 0096         SPI_Send_String(myStr, 5);
+;PCODE: $0000009D VOL: 0
+;PCODE: $0000009E VOL: 0
+;PCODE: $0000009F VOL: 0
+;PCODE: $000000A0 VOL: 0
+;PCODE: $000000A1 VOL: 0
+; 0000 0097         while(1);
+;PCODE: $000000A2 VOL: 0
+;PCODE: $000000A3 VOL: 0
+;PCODE: $000000A4 VOL: 0
+; 0000 0098     }
+;PCODE: $000000A5 VOL: 0
+;PCODE: $000000A6 VOL: 0
+; 0000 0099 }
+;PCODE: $000000A7 VOL: 0
+;PCODE: $000000A8 VOL: 0
+;PCODE: $000000A9 VOL: 0
+;PCODE: $000000AA VOL: 0

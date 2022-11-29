@@ -1,0 +1,8 @@
+VERSION:3 SOURCE_TIMESTAMP:413105BC
+NODE:I LEVEL:0 LINE:1 "C:\cvavreval\inc\mega32.h"
+NODE:I LEVEL:0 LINE:2 "C:\cvavreval\inc\delay.h"
+NODE:F LEVEL:0 LINE:4 "SPI_Init_Master(void)"
+NODE:F LEVEL:0 LINE:14 "SPI_Send_Char(unsigned char data)"
+NODE:F LEVEL:0 LINE:24 "SPI_Send_String(unsigned char * str,unsigned char N_Chars)"
+NODE:F LEVEL:0 LINE:32 "MCU_Init(void)"
+NODE:F LEVEL:0 LINE:135 "main(void)"

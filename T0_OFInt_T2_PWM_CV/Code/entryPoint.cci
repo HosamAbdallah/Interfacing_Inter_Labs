@@ -1,0 +1,6 @@
+VERSION:3 SOURCE_TIMESTAMP:412F7CF8
+NODE:I LEVEL:0 LINE:1 "C:\cvavreval\inc\mega16.h"
+NODE:V LEVEL:0 LINE:3 "T0_counter -> R4,R5"
+NODE:F LEVEL:0 LINE:6 "timer0_ovf_isr(void)"
+NODE:F LEVEL:0 LINE:19 "MCU_Init(void)"
+NODE:F LEVEL:0 LINE:122 "main(void)"

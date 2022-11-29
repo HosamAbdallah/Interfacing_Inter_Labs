@@ -1,0 +1,410 @@
+;#include <mega32.h>
+;PCODE: $00000000 VOL: 0
+	#ifndef __SLEEP_DEFINED__
+;PCODE: $00000001 VOL: 0
+	#define __SLEEP_DEFINED__
+;PCODE: $00000002 VOL: 0
+	.EQU __se_bit=0x80
+;PCODE: $00000003 VOL: 0
+	.EQU __sm_mask=0x70
+;PCODE: $00000004 VOL: 0
+	.EQU __sm_powerdown=0x20
+;PCODE: $00000005 VOL: 0
+	.EQU __sm_powersave=0x30
+;PCODE: $00000006 VOL: 0
+	.EQU __sm_standby=0x60
+;PCODE: $00000007 VOL: 0
+	.EQU __sm_ext_standby=0x70
+;PCODE: $00000008 VOL: 0
+	.EQU __sm_adc_noise_red=0x10
+;PCODE: $00000009 VOL: 0
+	.SET power_ctrl_reg=mcucr
+;PCODE: $0000000A VOL: 0
+	#endif
+;PCODE: $0000000B VOL: 0
+;PCODE: $0000000C VOL: 0
+;#include <delay.h>
+;
+;const unsigned char power[4]={1,2,4,8};
+;const unsigned char keys[4][4]=
+;{
+; {0,4,8,12},
+; {1,5,9,13},
+; {2,6,10,14},
+; {3,7,11,15}
+;};
+; // init mcu register
+; void MCU_INIT (void)
+; 0000 000E  {
+
+	.CSEG
+;PCODE: $0000000D VOL: 0
+;PCODE: $0000000E VOL: 0
+; 0000 000F  // Input/Output Ports initialization
+; 0000 0010  // Port A initialization
+; 0000 0011  // Func7=In Func6=In Func5=In Func4=In Func3=In Func2=In Func1=In Func0=In
+; 0000 0012  // State7=T State6=T State5=T State4=T State3=T State2=T State1=T State0=T
+; 0000 0013  PORTA=0x00;
+;PCODE: $0000000F VOL: 0
+;PCODE: $00000010 VOL: 0
+; 0000 0014  DDRA=0x00;
+;PCODE: $00000011 VOL: 0
+;PCODE: $00000012 VOL: 0
+; 0000 0015 
+; 0000 0016  // Port B initialization
+; 0000 0017  // Func7=In Func6=In Func5=In Func4=In Func3=In Func2=In Func1=In Func0=In
+; 0000 0018  // State7=T State6=T State5=T State4=T State3=T State2=T State1=T State0=T
+; 0000 0019  PORTB=0x0f;
+;PCODE: $00000013 VOL: 0
+;PCODE: $00000014 VOL: 0
+; 0000 001A  DDRB=0xf0;
+;PCODE: $00000015 VOL: 0
+;PCODE: $00000016 VOL: 0
+; 0000 001B 
+; 0000 001C // Port C initialization
+; 0000 001D  // Func7=In Func6=In Func5=In Func4=In Func3=In Func2=In Func1=In Func0=In
+; 0000 001E  // State7=T State6=T State5=T State4=T State3=T State2=T State1=T State0=T
+; 0000 001F  PORTC=0x00;
+;PCODE: $00000017 VOL: 0
+;PCODE: $00000018 VOL: 0
+; 0000 0020  DDRC=0xFF;
+;PCODE: $00000019 VOL: 0
+;PCODE: $0000001A VOL: 0
+; 0000 0021 
+; 0000 0022 // Port D initialization
+; 0000 0023  // Func7=In Func6=In Func5=In Func4=In Func3=In Func2=In Func1=In Func0=In
+; 0000 0024  // State7=T State6=T State5=T State4=T State3=T State2=T State1=T State0=T
+; 0000 0025  PORTD=0x00;
+;PCODE: $0000001B VOL: 0
+;PCODE: $0000001C VOL: 0
+; 0000 0026  DDRD=0x00;
+;PCODE: $0000001D VOL: 0
+;PCODE: $0000001E VOL: 0
+; 0000 0027 
+; 0000 0028 // Timer/Counter 0 initialization
+; 0000 0029  // Clock source: System Clock
+; 0000 002A  // Clock value: Timer 0 Stopped
+; 0000 002B  // Mode: Normal top=0xFF
+; 0000 002C  // OC0 output: Disconnected
+; 0000 002D  TCCR0=0x00;
+;PCODE: $0000001F VOL: 0
+;PCODE: $00000020 VOL: 0
+; 0000 002E  TCNT0=0x00;
+;PCODE: $00000021 VOL: 0
+;PCODE: $00000022 VOL: 0
+; 0000 002F  OCR0=0x00;
+;PCODE: $00000023 VOL: 0
+;PCODE: $00000024 VOL: 0
+; 0000 0030 
+; 0000 0031 // Timer/Counter 1 initialization
+; 0000 0032  // Clock source: System Clock
+; 0000 0033  // Clock value: Timer1 Stopped
+; 0000 0034  // Mode: Normal top=0xFFFF
+; 0000 0035  // OC1A output: Discon.
+; 0000 0036  // OC1B output: Discon.
+; 0000 0037  // Noise Canceler: Off
+; 0000 0038  // Input Capture on Falling Edge
+; 0000 0039  // Timer1 Overflow Interrupt: Off
+; 0000 003A  // Input Capture Interrupt: Off
+; 0000 003B  // Compare A Match Interrupt: Off
+; 0000 003C  // Compare B Match Interrupt: Off
+; 0000 003D  TCCR1A=0x00;
+;PCODE: $00000025 VOL: 0
+;PCODE: $00000026 VOL: 0
+; 0000 003E  TCCR1B=0x00;
+;PCODE: $00000027 VOL: 0
+;PCODE: $00000028 VOL: 0
+; 0000 003F  TCNT1H=0x00;
+;PCODE: $00000029 VOL: 0
+;PCODE: $0000002A VOL: 0
+; 0000 0040  TCNT1L=0x00;
+;PCODE: $0000002B VOL: 0
+;PCODE: $0000002C VOL: 0
+; 0000 0041  ICR1H=0x00;
+;PCODE: $0000002D VOL: 0
+;PCODE: $0000002E VOL: 0
+; 0000 0042  ICR1L=0x00;
+;PCODE: $0000002F VOL: 0
+;PCODE: $00000030 VOL: 0
+; 0000 0043  OCR1AH=0x00;
+;PCODE: $00000031 VOL: 0
+;PCODE: $00000032 VOL: 0
+; 0000 0044  OCR1AL=0x00;
+;PCODE: $00000033 VOL: 0
+;PCODE: $00000034 VOL: 0
+; 0000 0045  OCR1BH=0x00;
+;PCODE: $00000035 VOL: 0
+;PCODE: $00000036 VOL: 0
+; 0000 0046  OCR1BL=0x00;
+;PCODE: $00000037 VOL: 0
+;PCODE: $00000038 VOL: 0
+; 0000 0047 
+; 0000 0048 // Timer/Counter 2 initialization
+; 0000 0049  // Clock source: System Clock
+; 0000 004A  // Clock value: Timer2 Stopped
+; 0000 004B  // Mode: Normal top=0xFF
+; 0000 004C  // OC2 output: Disconnected
+; 0000 004D  ASSR=0x00;
+;PCODE: $00000039 VOL: 0
+;PCODE: $0000003A VOL: 0
+; 0000 004E  TCCR2=0x00;
+;PCODE: $0000003B VOL: 0
+;PCODE: $0000003C VOL: 0
+; 0000 004F  TCNT2=0x00;
+;PCODE: $0000003D VOL: 0
+;PCODE: $0000003E VOL: 0
+; 0000 0050  OCR2=0x00;
+;PCODE: $0000003F VOL: 0
+;PCODE: $00000040 VOL: 0
+; 0000 0051 
+; 0000 0052 // External Interrupt(s) initialization
+; 0000 0053  // INT0: Off
+; 0000 0054  // INT1: Off
+; 0000 0055  // INT2: Off
+; 0000 0056  MCUCR=0x00;
+;PCODE: $00000041 VOL: 0
+;PCODE: $00000042 VOL: 0
+; 0000 0057  MCUCSR=0x00;
+;PCODE: $00000043 VOL: 0
+;PCODE: $00000044 VOL: 0
+; 0000 0058 
+; 0000 0059 // Timer(s)/Counter(s) Interrupt(s) initialization
+; 0000 005A  TIMSK=0x00;
+;PCODE: $00000045 VOL: 0
+;PCODE: $00000046 VOL: 0
+; 0000 005B 
+; 0000 005C // USART initialization
+; 0000 005D  // USART disabled
+; 0000 005E  UCSRB=0x00;
+;PCODE: $00000047 VOL: 0
+;PCODE: $00000048 VOL: 0
+; 0000 005F 
+; 0000 0060 // Analog Comparator initialization
+; 0000 0061  // Analog Comparator: Off
+; 0000 0062  // Analog Comparator Input Capture by Timer/Counter 1: Off
+; 0000 0063  ACSR=0x80;
+;PCODE: $00000049 VOL: 0
+;PCODE: $0000004A VOL: 0
+; 0000 0064  SFIOR=0x00;
+;PCODE: $0000004B VOL: 0
+;PCODE: $0000004C VOL: 0
+; 0000 0065 
+; 0000 0066 // ADC initialization
+; 0000 0067  // ADC disabled
+; 0000 0068  ADCSRA=0x00;
+;PCODE: $0000004D VOL: 0
+;PCODE: $0000004E VOL: 0
+; 0000 0069 
+; 0000 006A // SPI initialization
+; 0000 006B  // SPI disabled
+; 0000 006C  SPCR=0x00;
+;PCODE: $0000004F VOL: 0
+;PCODE: $00000050 VOL: 0
+; 0000 006D 
+; 0000 006E // TWI initialization
+; 0000 006F  // TWI disabled
+; 0000 0070  TWCR=0x00;
+;PCODE: $00000051 VOL: 0
+;PCODE: $00000052 VOL: 0
+; 0000 0071  }
+;PCODE: $00000053 VOL: 0
+;PCODE: $00000054 VOL: 0
+;
+;unsigned char getpower(unsigned char val)
+; 0000 0074 {
+;PCODE: $00000055 VOL: 0
+;PCODE: $00000056 VOL: 0
+; 0000 0075      unsigned char count=0;
+; 0000 0076      for(count=0;count<4;count++)
+;PCODE: $00000057 VOL: 0
+;	val -> Y+1
+;	count -> R17
+;PCODE: $00000058 VOL: 0
+;PCODE: $00000059 VOL: 0
+;PCODE: $0000005A VOL: 0
+;PCODE: $0000005B VOL: 0
+;PCODE: $0000005C VOL: 0
+;PCODE: $0000005D VOL: 0
+;PCODE: $0000005E VOL: 0
+;PCODE: $0000005F VOL: 0
+;PCODE: $00000060 VOL: 0
+;PCODE: $00000061 VOL: 0
+;PCODE: $00000062 VOL: 0
+; 0000 0077      {
+; 0000 0078          if(power[count]==val)
+;PCODE: $00000063 VOL: 0
+;PCODE: $00000064 VOL: 0
+;PCODE: $00000065 VOL: 0
+;PCODE: $00000066 VOL: 0
+;PCODE: $00000067 VOL: 0
+;PCODE: $00000068 VOL: 0
+;PCODE: $00000069 VOL: 0
+; 0000 0079          break;
+;PCODE: $0000006A VOL: 0
+; 0000 007A      }
+;PCODE: $0000006B VOL: 0
+;PCODE: $0000006C VOL: 0
+;PCODE: $0000006D VOL: 0
+;PCODE: $0000006E VOL: 0
+;PCODE: $0000006F VOL: 0
+;PCODE: $00000070 VOL: 0
+; 0000 007B      return count;
+;PCODE: $00000071 VOL: 0
+;PCODE: $00000072 VOL: 0
+;PCODE: $00000073 VOL: 0
+;PCODE: $00000074 VOL: 0
+;PCODE: $00000075 VOL: 0
+; 0000 007C }
+;PCODE: $00000076 VOL: 0
+;
+;unsigned char getkey(void)
+; 0000 007F {
+;PCODE: $00000077 VOL: 0
+;PCODE: $00000078 VOL: 0
+; 0000 0080      unsigned char key=20;
+; 0000 0081      unsigned char count=0;
+; 0000 0082      unsigned char rowval=0;
+; 0000 0083 
+; 0000 0084      PORTB=(PORTB|0xF0);
+;PCODE: $00000079 VOL: 0
+;	key -> R17
+;	count -> R16
+;	rowval -> R19
+;PCODE: $0000007A VOL: 0
+;PCODE: $0000007B VOL: 0
+;PCODE: $0000007C VOL: 0
+;PCODE: $0000007D VOL: 0
+;PCODE: $0000007E VOL: 0
+;PCODE: $0000007F VOL: 0
+;PCODE: $00000080 VOL: 0
+;PCODE: $00000081 VOL: 0
+;PCODE: $00000082 VOL: 0
+; 0000 0085 
+; 0000 0086     for(count=0;count<4;count++)
+;PCODE: $00000083 VOL: 0
+;PCODE: $00000084 VOL: 0
+;PCODE: $00000085 VOL: 0
+;PCODE: $00000086 VOL: 0
+;PCODE: $00000087 VOL: 0
+;PCODE: $00000088 VOL: 0
+;PCODE: $00000089 VOL: 0
+;PCODE: $0000008A VOL: 0
+;PCODE: $0000008B VOL: 0
+; 0000 0087     {
+; 0000 0088          PORTB = PORTB&(~(0x10<<count));
+;PCODE: $0000008C VOL: 0
+;PCODE: $0000008D VOL: 0
+;PCODE: $0000008E VOL: 0
+;PCODE: $0000008F VOL: 0
+;PCODE: $00000090 VOL: 0
+;PCODE: $00000091 VOL: 0
+;PCODE: $00000092 VOL: 0
+;PCODE: $00000093 VOL: 0
+; 0000 0089          delay_ms(20);
+;PCODE: $00000094 VOL: 0
+;PCODE: $00000095 VOL: 0
+;PCODE: $00000096 VOL: 0
+; 0000 008A          rowval=PINB&0x0F;
+;PCODE: $00000097 VOL: 0
+;PCODE: $00000098 VOL: 0
+;PCODE: $00000099 VOL: 0
+; 0000 008B          if(rowval!=0x0F)
+;PCODE: $0000009A VOL: 0
+;PCODE: $0000009B VOL: 0
+;PCODE: $0000009C VOL: 0
+; 0000 008C          {
+; 0000 008D             break;
+;PCODE: $0000009D VOL: 0
+; 0000 008E          }
+; 0000 008F          PORTB=(PORTB|0xF0);
+;PCODE: $0000009E VOL: 0
+;PCODE: $0000009F VOL: 0
+;PCODE: $000000A0 VOL: 0
+;PCODE: $000000A1 VOL: 0
+; 0000 0090     }
+;PCODE: $000000A2 VOL: 0
+;PCODE: $000000A3 VOL: 0
+;PCODE: $000000A4 VOL: 0
+;PCODE: $000000A5 VOL: 0
+;PCODE: $000000A6 VOL: 0
+; 0000 0091 
+; 0000 0092     if(rowval==0x0F)
+;PCODE: $000000A7 VOL: 0
+;PCODE: $000000A8 VOL: 0
+;PCODE: $000000A9 VOL: 0
+; 0000 0093     {
+; 0000 0094         return key;
+;PCODE: $000000AA VOL: 0
+;PCODE: $000000AB VOL: 0
+;PCODE: $000000AC VOL: 0
+;PCODE: $000000AD VOL: 0
+; 0000 0095     }
+; 0000 0096     else
+;PCODE: $000000AE VOL: 0
+; 0000 0097     {
+; 0000 0098          rowval=rowval^0x0F;
+;PCODE: $000000AF VOL: 0
+;PCODE: $000000B0 VOL: 0
+;PCODE: $000000B1 VOL: 0
+; 0000 0099          rowval=getpower (rowval);
+;PCODE: $000000B2 VOL: 0
+;PCODE: $000000B3 VOL: 0
+;PCODE: $000000B4 VOL: 0
+; 0000 009A          return keys[rowval][count];
+;PCODE: $000000B5 VOL: 0
+;PCODE: $000000B6 VOL: 0
+;PCODE: $000000B7 VOL: 0
+;PCODE: $000000B8 VOL: 0
+;PCODE: $000000B9 VOL: 0
+;PCODE: $000000BA VOL: 0
+;PCODE: $000000BB VOL: 0
+;PCODE: $000000BC VOL: 0
+;PCODE: $000000BD VOL: 0
+;PCODE: $000000BE VOL: 0
+;PCODE: $000000BF VOL: 0
+;PCODE: $000000C0 VOL: 0
+; 0000 009B     }
+;PCODE: $000000C1 VOL: 0
+; 0000 009C 
+; 0000 009D }
+;PCODE: $000000C2 VOL: 0
+;PCODE: $000000C3 VOL: 0
+;PCODE: $000000C4 VOL: 0
+;PCODE: $000000C5 VOL: 0
+;
+;void main(void)
+; 0000 00A0 {
+;PCODE: $000000C6 VOL: 0
+; 0000 00A1     //declare variables
+; 0000 00A2 
+; 0000 00A3     //edit init area
+; 0000 00A4     MCU_INIT();
+;PCODE: $000000C7 VOL: 0
+; 0000 00A5 
+; 0000 00A6     while(1)
+;PCODE: $000000C8 VOL: 0
+; 0000 00A7     {
+; 0000 00A8          unsigned char x=0;
+; 0000 00A9          x=getkey();
+;PCODE: $000000C9 VOL: 0
+;PCODE: $000000CA VOL: 0
+;PCODE: $000000CB VOL: 0
+;	x -> Y+0
+;PCODE: $000000CC VOL: 0
+;PCODE: $000000CD VOL: 0
+; 0000 00AA          if(x!=20)
+;PCODE: $000000CE VOL: 0
+;PCODE: $000000CF VOL: 0
+;PCODE: $000000D0 VOL: 0
+; 0000 00AB          PORTC = x;
+;PCODE: $000000D1 VOL: 0
+;PCODE: $000000D2 VOL: 0
+; 0000 00AC     }
+;PCODE: $000000D3 VOL: 0
+;PCODE: $000000D4 VOL: 0
+;PCODE: $000000D5 VOL: 0
+;PCODE: $000000D6 VOL: 0
+; 0000 00AD }
+;PCODE: $000000D7 VOL: 0
+;PCODE: $000000D8 VOL: 0
+;PCODE: $000000D9 VOL: 0

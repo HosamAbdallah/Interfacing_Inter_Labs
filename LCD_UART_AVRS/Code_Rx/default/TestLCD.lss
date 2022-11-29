@@ -1,0 +1,687 @@
+
+TestLCD.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000266  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .debug_aranges 00000060  00000000  00000000  000002ba  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  2 .debug_pubnames 000000f8  00000000  00000000  0000031a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  3 .debug_info   00000858  00000000  00000000  00000412  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_abbrev 000002d0  00000000  00000000  00000c6a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_line   000005f0  00000000  00000000  00000f3a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_frame  000000f0  00000000  00000000  0000152c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_str    00000199  00000000  00000000  0000161c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_loc    000001bf  00000000  00000000  000017b5  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_ranges 000000a8  00000000  00000000  00001974  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+   8:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+   c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  10:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  14:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  18:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  1c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  20:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  24:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  28:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  2c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  30:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  34:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  38:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  3c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  40:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  44:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  48:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  4c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  50:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d4 e0       	ldi	r29, 0x04	; 4
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	10 e0       	ldi	r17, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	e6 e6       	ldi	r30, 0x66	; 102
+  68:	f2 e0       	ldi	r31, 0x02	; 2
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <.do_copy_data_start>
+
+0000006c <.do_copy_data_loop>:
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+
+00000070 <.do_copy_data_start>:
+  70:	a0 36       	cpi	r26, 0x60	; 96
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <.do_copy_data_loop>
+
+00000076 <__do_clear_bss>:
+  76:	10 e0       	ldi	r17, 0x00	; 0
+  78:	a0 e6       	ldi	r26, 0x60	; 96
+  7a:	b0 e0       	ldi	r27, 0x00	; 0
+  7c:	01 c0       	rjmp	.+2      	; 0x80 <.do_clear_bss_start>
+
+0000007e <.do_clear_bss_loop>:
+  7e:	1d 92       	st	X+, r1
+
+00000080 <.do_clear_bss_start>:
+  80:	a0 36       	cpi	r26, 0x60	; 96
+  82:	b1 07       	cpc	r27, r17
+  84:	e1 f7       	brne	.-8      	; 0x7e <.do_clear_bss_loop>
+  86:	0e 94 49 00 	call	0x92	; 0x92 <main>
+  8a:	0c 94 31 01 	jmp	0x262	; 0x262 <_exit>
+
+0000008e <__bad_interrupt>:
+  8e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000092 <main>:
+#include "my_lcdlib.h"
+#include "my_uart.h"
+#include <util/delay.h>
+
+int main(void)
+{
+  92:	ff 92       	push	r15
+  94:	0f 93       	push	r16
+  96:	1f 93       	push	r17
+  98:	df 93       	push	r29
+  9a:	cf 93       	push	r28
+  9c:	cd b7       	in	r28, 0x3d	; 61
+  9e:	de b7       	in	r29, 0x3e	; 62
+  a0:	60 97       	sbiw	r28, 0x10	; 16
+  a2:	0f b6       	in	r0, 0x3f	; 63
+  a4:	f8 94       	cli
+  a6:	de bf       	out	0x3e, r29	; 62
+  a8:	0f be       	out	0x3f, r0	; 63
+  aa:	cd bf       	out	0x3d, r28	; 61
+	unsigned char str[16] = {0};
+  ac:	8e 01       	movw	r16, r28
+  ae:	0f 5f       	subi	r16, 0xFF	; 255
+  b0:	1f 4f       	sbci	r17, 0xFF	; 255
+  b2:	80 e1       	ldi	r24, 0x10	; 16
+  b4:	f8 01       	movw	r30, r16
+  b6:	11 92       	st	Z+, r1
+  b8:	8a 95       	dec	r24
+  ba:	e9 f7       	brne	.-6      	; 0xb6 <main+0x24>
+
+	// init lcd
+	LCD_Init();
+  bc:	0e 94 6f 00 	call	0xde	; 0xde <LCD_Init>
+    // init uart
+	UART_Init();
+  c0:	0e 94 0c 01 	call	0x218	; 0x218 <UART_Init>
+
+	while(1)
+	{
+		UART_GetString(str);
+  c4:	f0 2e       	mov	r15, r16
+  c6:	01 2f       	mov	r16, r17
+  c8:	8f 2d       	mov	r24, r15
+  ca:	90 2f       	mov	r25, r16
+  cc:	0e 94 26 01 	call	0x24c	; 0x24c <UART_GetString>
+		LCD_ClearAll();
+  d0:	0e 94 ba 00 	call	0x174	; 0x174 <LCD_ClearAll>
+		LCD_DispString((char *)str);
+  d4:	8f 2d       	mov	r24, r15
+  d6:	90 2f       	mov	r25, r16
+  d8:	0e 94 f3 00 	call	0x1e6	; 0x1e6 <LCD_DispString>
+  dc:	f5 cf       	rjmp	.-22     	; 0xc8 <main+0x36>
+
+000000de <LCD_Init>:
+#include <avr/io.h>
+
+void LCD_Init(void)
+{
+	// Set PORTB -> Output Port
+	DDRB = 0xFF;
+  de:	8f ef       	ldi	r24, 0xFF	; 255
+  e0:	87 bb       	out	0x17, r24	; 23
+	PORTB = 0x00;
+  e2:	18 ba       	out	0x18, r1	; 24
+
+	// Set PORTC -> Output Port
+	DDRC = 0x07;
+  e4:	87 e0       	ldi	r24, 0x07	; 7
+  e6:	84 bb       	out	0x14, r24	; 20
+	PORTC = 0x01;
+  e8:	91 e0       	ldi	r25, 0x01	; 1
+  ea:	95 bb       	out	0x15, r25	; 21
+}
+
+void LCD_SendCmd(unsigned char cmd)
+{
+	// Make RS -> COMMAND 0
+	PORTC = PORTC & 0xFB;
+  ec:	aa 98       	cbi	0x15, 2	; 21
+	// Make R/W -> W 0
+	PORTC = PORTC & 0xFD;
+  ee:	a9 98       	cbi	0x15, 1	; 21
+
+	// Put cmd to Data Pins
+	PORTB = cmd;
+  f0:	88 e3       	ldi	r24, 0x38	; 56
+  f2:	88 bb       	out	0x18, r24	; 24
+
+	// Make E -> Low
+	PORTC = PORTC & 0xFE;
+  f4:	a8 98       	cbi	0x15, 0	; 21
+    milliseconds can be achieved.
+ */
+void
+_delay_loop_2(uint16_t __count)
+{
+	__asm__ volatile (
+  f6:	40 ed       	ldi	r20, 0xD0	; 208
+  f8:	57 e0       	ldi	r21, 0x07	; 7
+  fa:	fa 01       	movw	r30, r20
+  fc:	31 97       	sbiw	r30, 0x01	; 1
+  fe:	f1 f7       	brne	.-4      	; 0xfc <LCD_Init+0x1e>
+	// Delay For Small Time
+	_delay_ms(1);
+	// Make E -> High
+	PORTC = PORTC | 0x01;
+ 100:	a8 9a       	sbi	0x15, 0	; 21
+ 102:	20 e1       	ldi	r18, 0x10	; 16
+ 104:	37 e2       	ldi	r19, 0x27	; 39
+ 106:	f9 01       	movw	r30, r18
+ 108:	31 97       	sbiw	r30, 0x01	; 1
+ 10a:	f1 f7       	brne	.-4      	; 0x108 <LCD_Init+0x2a>
+}
+
+void LCD_SendCmd(unsigned char cmd)
+{
+	// Make RS -> COMMAND 0
+	PORTC = PORTC & 0xFB;
+ 10c:	aa 98       	cbi	0x15, 2	; 21
+	// Make R/W -> W 0
+	PORTC = PORTC & 0xFD;
+ 10e:	a9 98       	cbi	0x15, 1	; 21
+
+	// Put cmd to Data Pins
+	PORTB = cmd;
+ 110:	8c e0       	ldi	r24, 0x0C	; 12
+ 112:	88 bb       	out	0x18, r24	; 24
+
+	// Make E -> Low
+	PORTC = PORTC & 0xFE;
+ 114:	a8 98       	cbi	0x15, 0	; 21
+ 116:	fa 01       	movw	r30, r20
+ 118:	31 97       	sbiw	r30, 0x01	; 1
+ 11a:	f1 f7       	brne	.-4      	; 0x118 <LCD_Init+0x3a>
+	// Delay For Small Time
+	_delay_ms(1);
+	// Make E -> High
+	PORTC = PORTC | 0x01;
+ 11c:	a8 9a       	sbi	0x15, 0	; 21
+ 11e:	f9 01       	movw	r30, r18
+ 120:	31 97       	sbiw	r30, 0x01	; 1
+ 122:	f1 f7       	brne	.-4      	; 0x120 <LCD_Init+0x42>
+}
+
+void LCD_SendCmd(unsigned char cmd)
+{
+	// Make RS -> COMMAND 0
+	PORTC = PORTC & 0xFB;
+ 124:	aa 98       	cbi	0x15, 2	; 21
+	// Make R/W -> W 0
+	PORTC = PORTC & 0xFD;
+ 126:	a9 98       	cbi	0x15, 1	; 21
+
+	// Put cmd to Data Pins
+	PORTB = cmd;
+ 128:	98 bb       	out	0x18, r25	; 24
+
+	// Make E -> Low
+	PORTC = PORTC & 0xFE;
+ 12a:	a8 98       	cbi	0x15, 0	; 21
+ 12c:	ca 01       	movw	r24, r20
+ 12e:	01 97       	sbiw	r24, 0x01	; 1
+ 130:	f1 f7       	brne	.-4      	; 0x12e <LCD_Init+0x50>
+	// Delay For Small Time
+	_delay_ms(1);
+	// Make E -> High
+	PORTC = PORTC | 0x01;
+ 132:	a8 9a       	sbi	0x15, 0	; 21
+ 134:	c9 01       	movw	r24, r18
+ 136:	01 97       	sbiw	r24, 0x01	; 1
+ 138:	f1 f7       	brne	.-4      	; 0x136 <LCD_Init+0x58>
+	// On LCD
+	LCD_SendCmd(0x0C);
+
+	// Clear LCD
+	LCD_ClearAll();
+}
+ 13a:	08 95       	ret
+
+0000013c <LCD_DispChar>:
+
+void LCD_DispChar(unsigned char data)
+{
+	// Make RS -> Data 1
+	PORTC = PORTC | 0x04;
+ 13c:	aa 9a       	sbi	0x15, 2	; 21
+	// Make R/W -> W 0
+	PORTC = PORTC & 0xFD;
+ 13e:	a9 98       	cbi	0x15, 1	; 21
+
+	// Put data to Data Pins
+	PORTB = data;
+ 140:	88 bb       	out	0x18, r24	; 24
+
+	// Make E -> Low
+	PORTC = PORTC & 0xFE;
+ 142:	a8 98       	cbi	0x15, 0	; 21
+ 144:	80 ed       	ldi	r24, 0xD0	; 208
+ 146:	97 e0       	ldi	r25, 0x07	; 7
+ 148:	01 97       	sbiw	r24, 0x01	; 1
+ 14a:	f1 f7       	brne	.-4      	; 0x148 <LCD_DispChar+0xc>
+	// Delay For Small Time
+	_delay_ms(1);
+	// Make E -> High
+	PORTC = PORTC | 0x01;
+ 14c:	a8 9a       	sbi	0x15, 0	; 21
+ 14e:	80 e1       	ldi	r24, 0x10	; 16
+ 150:	97 e2       	ldi	r25, 0x27	; 39
+ 152:	01 97       	sbiw	r24, 0x01	; 1
+ 154:	f1 f7       	brne	.-4      	; 0x152 <LCD_DispChar+0x16>
+
+	// Give LCD some Delay
+	_delay_ms(5);
+}
+ 156:	08 95       	ret
+
+00000158 <LCD_SendCmd>:
+
+void LCD_SendCmd(unsigned char cmd)
+{
+	// Make RS -> COMMAND 0
+	PORTC = PORTC & 0xFB;
+ 158:	aa 98       	cbi	0x15, 2	; 21
+	// Make R/W -> W 0
+	PORTC = PORTC & 0xFD;
+ 15a:	a9 98       	cbi	0x15, 1	; 21
+
+	// Put cmd to Data Pins
+	PORTB = cmd;
+ 15c:	88 bb       	out	0x18, r24	; 24
+
+	// Make E -> Low
+	PORTC = PORTC & 0xFE;
+ 15e:	a8 98       	cbi	0x15, 0	; 21
+ 160:	80 ed       	ldi	r24, 0xD0	; 208
+ 162:	97 e0       	ldi	r25, 0x07	; 7
+ 164:	01 97       	sbiw	r24, 0x01	; 1
+ 166:	f1 f7       	brne	.-4      	; 0x164 <LCD_SendCmd+0xc>
+	// Delay For Small Time
+	_delay_ms(1);
+	// Make E -> High
+	PORTC = PORTC | 0x01;
+ 168:	a8 9a       	sbi	0x15, 0	; 21
+ 16a:	80 e1       	ldi	r24, 0x10	; 16
+ 16c:	97 e2       	ldi	r25, 0x27	; 39
+ 16e:	01 97       	sbiw	r24, 0x01	; 1
+ 170:	f1 f7       	brne	.-4      	; 0x16e <LCD_SendCmd+0x16>
+
+	// Give LCD some Delay
+	_delay_ms(5);
+}
+ 172:	08 95       	ret
+
+00000174 <LCD_ClearAll>:
+}
+
+void LCD_SendCmd(unsigned char cmd)
+{
+	// Make RS -> COMMAND 0
+	PORTC = PORTC & 0xFB;
+ 174:	aa 98       	cbi	0x15, 2	; 21
+	// Make R/W -> W 0
+	PORTC = PORTC & 0xFD;
+ 176:	a9 98       	cbi	0x15, 1	; 21
+
+	// Put cmd to Data Pins
+	PORTB = cmd;
+ 178:	81 e0       	ldi	r24, 0x01	; 1
+ 17a:	88 bb       	out	0x18, r24	; 24
+
+	// Make E -> Low
+	PORTC = PORTC & 0xFE;
+ 17c:	a8 98       	cbi	0x15, 0	; 21
+ 17e:	80 ed       	ldi	r24, 0xD0	; 208
+ 180:	97 e0       	ldi	r25, 0x07	; 7
+ 182:	01 97       	sbiw	r24, 0x01	; 1
+ 184:	f1 f7       	brne	.-4      	; 0x182 <LCD_ClearAll+0xe>
+	// Delay For Small Time
+	_delay_ms(1);
+	// Make E -> High
+	PORTC = PORTC | 0x01;
+ 186:	a8 9a       	sbi	0x15, 0	; 21
+ 188:	80 e1       	ldi	r24, 0x10	; 16
+ 18a:	97 e2       	ldi	r25, 0x27	; 39
+ 18c:	01 97       	sbiw	r24, 0x01	; 1
+ 18e:	f1 f7       	brne	.-4      	; 0x18c <LCD_ClearAll+0x18>
+}
+
+void LCD_ClearAll(void)
+{
+	LCD_SendCmd(0x01);
+}
+ 190:	08 95       	ret
+
+00000192 <LCD_GotoXY>:
+
+void LCD_GotoXY(unsigned char x, unsigned char y)
+{
+	if(y == 1)
+ 192:	61 30       	cpi	r22, 0x01	; 1
+ 194:	11 f4       	brne	.+4      	; 0x19a <LCD_GotoXY+0x8>
+	{
+		LCD_SendCmd(0x80 + x);
+ 196:	80 58       	subi	r24, 0x80	; 128
+ 198:	07 c0       	rjmp	.+14     	; 0x1a8 <LCD_GotoXY+0x16>
+	}
+	else if( y == 2)
+ 19a:	62 30       	cpi	r22, 0x02	; 2
+ 19c:	11 f4       	brne	.+4      	; 0x1a2 <LCD_GotoXY+0x10>
+	{
+		LCD_SendCmd(0xC0 + x);
+ 19e:	80 54       	subi	r24, 0x40	; 64
+ 1a0:	03 c0       	rjmp	.+6      	; 0x1a8 <LCD_GotoXY+0x16>
+	}
+	else if(y == 3)
+ 1a2:	63 30       	cpi	r22, 0x03	; 3
+ 1a4:	79 f4       	brne	.+30     	; 0x1c4 <LCD_GotoXY+0x32>
+	{
+		LCD_SendCmd(0x94 + x);
+ 1a6:	8c 56       	subi	r24, 0x6C	; 108
+}
+
+void LCD_SendCmd(unsigned char cmd)
+{
+	// Make RS -> COMMAND 0
+	PORTC = PORTC & 0xFB;
+ 1a8:	aa 98       	cbi	0x15, 2	; 21
+	// Make R/W -> W 0
+	PORTC = PORTC & 0xFD;
+ 1aa:	a9 98       	cbi	0x15, 1	; 21
+
+	// Put cmd to Data Pins
+	PORTB = cmd;
+ 1ac:	88 bb       	out	0x18, r24	; 24
+
+	// Make E -> Low
+	PORTC = PORTC & 0xFE;
+ 1ae:	a8 98       	cbi	0x15, 0	; 21
+ 1b0:	80 ed       	ldi	r24, 0xD0	; 208
+ 1b2:	97 e0       	ldi	r25, 0x07	; 7
+ 1b4:	01 97       	sbiw	r24, 0x01	; 1
+ 1b6:	f1 f7       	brne	.-4      	; 0x1b4 <LCD_GotoXY+0x22>
+	// Delay For Small Time
+	_delay_ms(1);
+	// Make E -> High
+	PORTC = PORTC | 0x01;
+ 1b8:	a8 9a       	sbi	0x15, 0	; 21
+ 1ba:	80 e1       	ldi	r24, 0x10	; 16
+ 1bc:	97 e2       	ldi	r25, 0x27	; 39
+ 1be:	01 97       	sbiw	r24, 0x01	; 1
+ 1c0:	f1 f7       	brne	.-4      	; 0x1be <LCD_GotoXY+0x2c>
+ 1c2:	08 95       	ret
+	}
+	else if(y == 3)
+	{
+		LCD_SendCmd(0x94 + x);
+	}
+	else if( y == 4)
+ 1c4:	64 30       	cpi	r22, 0x04	; 4
+ 1c6:	71 f4       	brne	.+28     	; 0x1e4 <LCD_GotoXY+0x52>
+	{
+		LCD_SendCmd(0xD4 + x);
+ 1c8:	8c 52       	subi	r24, 0x2C	; 44
+}
+
+void LCD_SendCmd(unsigned char cmd)
+{
+	// Make RS -> COMMAND 0
+	PORTC = PORTC & 0xFB;
+ 1ca:	aa 98       	cbi	0x15, 2	; 21
+	// Make R/W -> W 0
+	PORTC = PORTC & 0xFD;
+ 1cc:	a9 98       	cbi	0x15, 1	; 21
+
+	// Put cmd to Data Pins
+	PORTB = cmd;
+ 1ce:	88 bb       	out	0x18, r24	; 24
+
+	// Make E -> Low
+	PORTC = PORTC & 0xFE;
+ 1d0:	a8 98       	cbi	0x15, 0	; 21
+ 1d2:	80 ed       	ldi	r24, 0xD0	; 208
+ 1d4:	97 e0       	ldi	r25, 0x07	; 7
+ 1d6:	01 97       	sbiw	r24, 0x01	; 1
+ 1d8:	f1 f7       	brne	.-4      	; 0x1d6 <LCD_GotoXY+0x44>
+	// Delay For Small Time
+	_delay_ms(1);
+	// Make E -> High
+	PORTC = PORTC | 0x01;
+ 1da:	a8 9a       	sbi	0x15, 0	; 21
+ 1dc:	80 e1       	ldi	r24, 0x10	; 16
+ 1de:	97 e2       	ldi	r25, 0x27	; 39
+ 1e0:	01 97       	sbiw	r24, 0x01	; 1
+ 1e2:	f1 f7       	brne	.-4      	; 0x1e0 <LCD_GotoXY+0x4e>
+ 1e4:	08 95       	ret
+
+000001e6 <LCD_DispString>:
+	}
+
+}
+
+void LCD_DispString(char *str)
+{
+ 1e6:	20 e0       	ldi	r18, 0x00	; 0
+ 1e8:	60 ed       	ldi	r22, 0xD0	; 208
+ 1ea:	77 e0       	ldi	r23, 0x07	; 7
+	unsigned char count = 0;
+	while(str[count] != '\0')
+		LCD_DispChar(str[count++]);
+ 1ec:	40 e1       	ldi	r20, 0x10	; 16
+ 1ee:	57 e2       	ldi	r21, 0x27	; 39
+ 1f0:	0c c0       	rjmp	.+24     	; 0x20a <LCD_DispString+0x24>
+ 1f2:	2f 5f       	subi	r18, 0xFF	; 255
+}
+
+void LCD_DispChar(unsigned char data)
+{
+	// Make RS -> Data 1
+	PORTC = PORTC | 0x04;
+ 1f4:	aa 9a       	sbi	0x15, 2	; 21
+	// Make R/W -> W 0
+	PORTC = PORTC & 0xFD;
+ 1f6:	a9 98       	cbi	0x15, 1	; 21
+
+	// Put data to Data Pins
+	PORTB = data;
+ 1f8:	e8 bb       	out	0x18, r30	; 24
+
+	// Make E -> Low
+	PORTC = PORTC & 0xFE;
+ 1fa:	a8 98       	cbi	0x15, 0	; 21
+ 1fc:	fb 01       	movw	r30, r22
+ 1fe:	31 97       	sbiw	r30, 0x01	; 1
+ 200:	f1 f7       	brne	.-4      	; 0x1fe <LCD_DispString+0x18>
+	// Delay For Small Time
+	_delay_ms(1);
+	// Make E -> High
+	PORTC = PORTC | 0x01;
+ 202:	a8 9a       	sbi	0x15, 0	; 21
+ 204:	fa 01       	movw	r30, r20
+ 206:	31 97       	sbiw	r30, 0x01	; 1
+ 208:	f1 f7       	brne	.-4      	; 0x206 <LCD_DispString+0x20>
+}
+
+void LCD_DispString(char *str)
+{
+	unsigned char count = 0;
+	while(str[count] != '\0')
+ 20a:	fc 01       	movw	r30, r24
+ 20c:	e2 0f       	add	r30, r18
+ 20e:	f1 1d       	adc	r31, r1
+ 210:	e0 81       	ld	r30, Z
+ 212:	ee 23       	and	r30, r30
+ 214:	71 f7       	brne	.-36     	; 0x1f2 <LCD_DispString+0xc>
+		LCD_DispChar(str[count++]);
+}
+ 216:	08 95       	ret
+
+00000218 <UART_Init>:
+#include <avr/io.h>
+
+void UART_Init(void)
+{
+	// Set BaudRate -> 9600/8MhZ
+	UBRRL = 51;
+ 218:	83 e3       	ldi	r24, 0x33	; 51
+ 21a:	89 b9       	out	0x09, r24	; 9
+	UBRRH = 0;
+ 21c:	10 bc       	out	0x20, r1	; 32
+	// Set Frame Formta -> 8 data, 1 stop, No Parity
+	UCSRC = 0x86;
+ 21e:	86 e8       	ldi	r24, 0x86	; 134
+ 220:	80 bd       	out	0x20, r24	; 32
+	// Enable RX and TX
+	UCSRB = 0x18;
+ 222:	88 e1       	ldi	r24, 0x18	; 24
+ 224:	8a b9       	out	0x0a, r24	; 10
+}
+ 226:	08 95       	ret
+
+00000228 <UART_SendChar>:
+
+void UART_SendChar(unsigned char data)
+{
+	// Wait untill transmission Register Empty
+	while((UCSRA&0x20) == 0x00);
+ 228:	5d 9b       	sbis	0x0b, 5	; 11
+ 22a:	fe cf       	rjmp	.-4      	; 0x228 <UART_SendChar>
+	UDR = data;
+ 22c:	8c b9       	out	0x0c, r24	; 12
+}
+ 22e:	08 95       	ret
+
+00000230 <UART_GetChar>:
+
+unsigned char UART_GetChar(void)
+{
+	// Wait untill Reception Complete
+	while((UCSRA&0x80) == 0x00);
+ 230:	5f 9b       	sbis	0x0b, 7	; 11
+ 232:	fe cf       	rjmp	.-4      	; 0x230 <UART_GetChar>
+	return UDR;
+ 234:	8c b1       	in	r24, 0x0c	; 12
+}
+ 236:	08 95       	ret
+
+00000238 <UART_SendString>:
+
+void UART_SendString(unsigned char *str)
+{
+ 238:	fc 01       	movw	r30, r24
+ 23a:	04 c0       	rjmp	.+8      	; 0x244 <UART_SendString+0xc>
+}
+
+void UART_SendChar(unsigned char data)
+{
+	// Wait untill transmission Register Empty
+	while((UCSRA&0x20) == 0x00);
+ 23c:	5d 9b       	sbis	0x0b, 5	; 11
+ 23e:	fe cf       	rjmp	.-4      	; 0x23c <UART_SendString+0x4>
+	UDR = data;
+ 240:	8c b9       	out	0x0c, r24	; 12
+void UART_SendString(unsigned char *str)
+{
+	while(*str != '\0')
+	{
+		UART_SendChar(*str);
+		str++;
+ 242:	31 96       	adiw	r30, 0x01	; 1
+	return UDR;
+}
+
+void UART_SendString(unsigned char *str)
+{
+	while(*str != '\0')
+ 244:	80 81       	ld	r24, Z
+ 246:	88 23       	and	r24, r24
+ 248:	c9 f7       	brne	.-14     	; 0x23c <UART_SendString+0x4>
+	{
+		UART_SendChar(*str);
+		str++;
+	}
+}
+ 24a:	08 95       	ret
+
+0000024c <UART_GetString>:
+
+void UART_GetString(unsigned char *str)
+{
+ 24c:	fc 01       	movw	r30, r24
+}
+
+unsigned char UART_GetChar(void)
+{
+	// Wait untill Reception Complete
+	while((UCSRA&0x80) == 0x00);
+ 24e:	5f 9b       	sbis	0x0b, 7	; 11
+ 250:	fe cf       	rjmp	.-4      	; 0x24e <UART_GetString+0x2>
+	return UDR;
+ 252:	8c b1       	in	r24, 0x0c	; 12
+{
+	unsigned char temp = 0;
+	do
+	{
+		temp = UART_GetChar();
+		*str = temp;
+ 254:	80 83       	st	Z, r24
+		str++;
+	}while(temp != '#');
+ 256:	83 32       	cpi	r24, 0x23	; 35
+ 258:	11 f0       	breq	.+4      	; 0x25e <UART_GetString+0x12>
+	unsigned char temp = 0;
+	do
+	{
+		temp = UART_GetChar();
+		*str = temp;
+		str++;
+ 25a:	31 96       	adiw	r30, 0x01	; 1
+ 25c:	f8 cf       	rjmp	.-16     	; 0x24e <UART_GetString+0x2>
+	}while(temp != '#');
+	
+	str--;
+	*str = '\0';
+ 25e:	10 82       	st	Z, r1
+}
+ 260:	08 95       	ret
+
+00000262 <_exit>:
+ 262:	f8 94       	cli
+
+00000264 <__stop_program>:
+ 264:	ff cf       	rjmp	.-2      	; 0x264 <__stop_program>

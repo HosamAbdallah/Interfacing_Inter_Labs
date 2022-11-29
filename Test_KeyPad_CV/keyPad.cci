@@ -1,0 +1,9 @@
+VERSION:3 SOURCE_TIMESTAMP:4154A43A
+NODE:I LEVEL:0 LINE:1 "C:\cvavreval\inc\mega32.h"
+NODE:I LEVEL:0 LINE:2 "C:\cvavreval\inc\delay.h"
+NODE:C LEVEL:0 LINE:4 "power -> FLASH"
+NODE:C LEVEL:0 LINE:5 "keys -> FLASH"
+NODE:F LEVEL:0 LINE:13 "MCU_INIT(void)"
+NODE:F LEVEL:0 LINE:115 "getpower(unsigned char val)"
+NODE:F LEVEL:0 LINE:126 "getkey(void)"
+NODE:F LEVEL:0 LINE:159 "main(void)"
